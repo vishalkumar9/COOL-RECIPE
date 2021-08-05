@@ -1,0 +1,14 @@
+var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
+_parcelHelpers.defineInteropFlag(exports);
+_parcelHelpers.export(exports, "API_URL", function () {
+  return API_URL;
+});
+_parcelHelpers.export(exports, "RES_PER_PAGE", function () {
+  return RES_PER_PAGE;
+});
+_parcelHelpers.export(exports, "KEY", function () {
+  return KEY;
+});
+const API_URL = 'https://forkify-api.herokuapp.com/api/v2/recipes';
+const RES_PER_PAGE = 10;
+const KEY = '89fc832a-f183-4683-995e-1c182f56c2cd';

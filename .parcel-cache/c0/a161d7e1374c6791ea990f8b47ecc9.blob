@@ -1,0 +1,35 @@
+var _modelJs = require('./model.js');
+var _viewsRecipeViewsJs = require('./views/recipeViews.js');
+var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
+var _viewsRecipeViewsJsDefault = _parcelHelpers.interopDefault(_viewsRecipeViewsJs);
+var _viewsSearchViewJs = require('./views/searchView.js');
+var _viewsSearchViewJsDefault = _parcelHelpers.interopDefault(_viewsSearchViewJs);
+require('core-js/stable');
+require('regenerator-runtime/runtime');
+var _viewsRecipeViewsJsDefault = _parcelHelpers.interopDefault(_viewsRecipeViewsJs);
+require('core-js/fn/symbol');
+// https://forkify-api.herokuapp.com/v2
+const controlRecipes = async function () {
+  try {
+    const id = window.location.hash.slice(1);
+    if (!id) return;
+    _viewsRecipeViewsJsDefault.default.renderSpinner();
+    await _modelJs.loadRecipe(id);
+    _viewsRecipeViewsJsDefault.default.render(_modelJs.state.recipe);
+  } catch (err) {
+    _viewsRecipeViewsJsDefault.default.renderError();
+  }
+};
+const controlSearchResults = async function () {
+  try {
+    const query = _viewsSearchViewJsDefault.default.getQuery();
+    await _modelJs.loadSearchResults('pizza');
+  } catch (err) {
+    _viewsRecipeViewsJsDefault.default.renderError();
+  }
+};
+controlSearchResults();
+const init = function () {
+  _viewsRecipeViewsJsDefault.default.addHandlerRender(controlRecipes);
+};
+init();

@@ -1,0 +1,48 @@
+var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
+_parcelHelpers.defineInteropFlag(exports);
+class View {
+  _data;
+  render(data) {
+    this._data = data;
+    const markup = this._generateMarkup();
+    this._clear();
+    this._parentElement.insertAdjacentHTML('afterbegin', markup);
+  }
+  _clear() {
+    this._parentElement.innerHTML = '';
+  }
+  renderError() {
+    const markup = `<div class="error">
+    <div>
+      <svg>
+        <use href="${icons}#icon-alert-triangle"></use>
+      </svg>
+    </div>
+    <p>We Could Not Find That Recipe. Please Try Another One!😐😐😐😐🤐</p>
+  </div>`;
+    this._clear();
+    this._parentElement.insertAdjacentHTML('afterbegin', markup);
+  }
+  renderMessage() {
+    const markup = `<div class="message">
+    <div>
+      <svg>
+        <use href="${icons}#icon-smile"></use>
+      </svg>
+    </div>
+    <p>We Could Not Find That Recipe. Please Try Another One!😐😐😐😐🤐</p>
+  </div>`;
+    this._clear();
+    this._parentElement.insertAdjacentHTML('afterbegin', markup);
+  }
+  renderSpinner() {
+    const markup = `<div class="spinner">
+    <svg> 
+      <use href="${icons}#icon-loader"></use>
+    </svg>
+  </div>`;
+    this._clear();
+    this._parentElement.insertAdjacentHTML('afterbegin', markup);
+  }
+}
+exports.default = View;

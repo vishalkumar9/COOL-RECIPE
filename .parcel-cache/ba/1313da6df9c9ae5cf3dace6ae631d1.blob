@@ -1,0 +1,52 @@
+var _modelJs = require('./model.js');
+var _viewsRecipeViewsJs = require('./views/recipeViews.js');
+var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
+var _viewsRecipeViewsJsDefault = _parcelHelpers.interopDefault(_viewsRecipeViewsJs);
+var _viewsSearchViewJs = require('./views/searchView.js');
+var _viewsSearchViewJsDefault = _parcelHelpers.interopDefault(_viewsSearchViewJs);
+var _viewsResultsViewJs = require('./views/resultsView.js');
+var _viewsResultsViewJsDefault = _parcelHelpers.interopDefault(_viewsResultsViewJs);
+var _viewsPaginationViewJs = require('./views/paginationView.js');
+var _viewsPaginationViewJsDefault = _parcelHelpers.interopDefault(_viewsPaginationViewJs);
+require('core-js/stable');
+require('regenerator-runtime/runtime');
+// if (module.hot) {
+// module.hot.accept();
+// }
+const controlRecipes = async function () {
+  try {
+    const id = window.location.hash.slice(1);
+    if (!id) return;
+    _viewsRecipeViewsJsDefault.default.renderSpinner();
+    await _modelJs.loadRecipe(id);
+    _viewsRecipeViewsJsDefault.default.render(_modelJs.state.recipe);
+  } catch (err) {
+    _viewsRecipeViewsJsDefault.default.renderError();
+  }
+};
+const controlSearchResults = async function () {
+  try {
+    _viewsResultsViewJsDefault.default.renderSpinner();
+    const query = _viewsSearchViewJsDefault.default.getQuery();
+    if (!query) return;
+    await _modelJs.loadSearchResults(query);
+    _viewsResultsViewJsDefault.default.render(_modelJs.getSearchResultsPage(4));
+    _viewsPaginationViewJsDefault.default.render(_modelJs.state.search);
+  } catch (err) {
+    _viewsRecipeViewsJsDefault.default.renderError();
+  }
+};
+const controlPagination = function (gotoPage) {
+  _viewsResultsViewJsDefault.default.render(_modelJs.getSearchResultsPage(gotoPage));
+  _viewsPaginationViewJsDefault.default.render(_modelJs.state.search);
+};
+const controlServings = function () {
+  _modelJs.updateServings(8);
+  _viewsRecipeViewsJsDefault.default.render(_modelJs.state.recipe);
+};
+const init = function () {
+  _viewsRecipeViewsJsDefault.default.addHandlerRender(controlRecipes);
+  _viewsSearchViewJsDefault.default.addHandlerSearch(controlSearchResults);
+  _viewsPaginationViewJsDefault.default.addHandlerClick(controlPagination);
+};
+init();
